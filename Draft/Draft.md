@@ -45,7 +45,7 @@ Draft也为云的“内部循环”提供开发经验。当然，与今天所有
 Draft通过一个 `draft up` 命令来处理这些任务：
 - 从 *draft.toml* 读取配置
 - 将 *chart/* 目录和应用程序目录压缩成两个单独的压缩包
-- 将压缩包上传到* draftd* ，即服务器端组件
+- 将压缩包上传到*draftd* ，即服务器端组件
 - 然后 *draftd* 将构建docker镜像并将这个镜像推送到注册表
 - *draftd* 引用刚刚构建的Docker注册表镜像指导helm安装Helm图表
 

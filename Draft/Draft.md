@@ -5,7 +5,7 @@
 大约一个月前，微软宣布收购DEIS来扩大我们在容器和Kubernetes方面的专业知识。今天，我很高兴地宣布，从这个新扩展的Azure团队衍生出一个新的开源项目：Draft。
 现今Kubernetes在部署和管理大规模应用程序方面有非常好的优势。但是在开发一个新的Kubernetes应用过程仍是非常困难。如果你是容器方面、Kubernetes或者开发应用上的新手，则更加困难。
 
-Draft填补了这个角色。正如它名字所示，它是一个工具，可以帮助你开始在Kubernetes运行为容器应用准备的第一个草案。当你第一次运行draft工具时，它会自动发现你正在处理的代码，并构建脚手架以支持对应用程序的容器化。使用启发式和各种预定义的项目模板Draft将创建一个初始的dockerfile来容纳你的应用，还有Helm图表，以使你的应用能够在Kubernetes群集中进行部署和维护。团队甚至可以自己编写项目模板来定制由该工具构建的支架。
+Draft填补了这个角色。正如它名字所示，它是一个工具，可以帮助你开始在Kubernetes运行为容器应用准备的第一个草案。当你第一次运行draft工具时，它会自动发现你正在处理的代码，并构建脚手架以支持对应用程序的容器化。使用启发式和各种预定义的项目模板Draft将创建一个初始的dockerfile来容纳你的应用，还有Helm图表，以使你的应用能够在Kubernetes群集中进行部署和维护。团队甚至可以自己编写项目模板来定制由该工具构建的脚手架。
 
 但是Draft的价值远远超出了一些文件中的脚手架，以帮助你创建应用程序。Draft还将服务器部署到你现有的Kubernetes群集中，并且自动与你的笔记本电脑保持同步。只要你修改了应用程序，笔记本电脑上的Draft守护进程程序会将该代码与Kubernetes中的Draft服务器进行同步，并自动构建和部署新的容器，而不需要用户进行任何操作。
 
@@ -19,7 +19,7 @@ Draft也为云的“内部循环”提供开发经验。当然，与今天所有
 
 ## 创建一个Draft
 
-我们需要一些“脚手架”部署我们应用程序到[Kubernetes](https://kubernetes.io/)集群中。Draft能够通过命令*draft create*创建一个*[Helm](https://github.com/kubernetes/helm)图表*，一个*Dockerfile*文件和一个*draft.toml*文件:
+我们需要一些“脚手架”部署我们应用程序到[Kubernetes](https://kubernetes.io/)集群中。Draft能够通过命令`draft create`创建一个`[Helm](https://github.com/kubernetes/helm)图表`，一个`Dockerfile`文件和一个`draft.toml`文件:
 
 	$ draft create
 	--> Python app detected
@@ -27,9 +27,9 @@ Draft也为云的“内部循环”提供开发经验。当然，与今天所有
 	$ ls
 	Dockerfile  app.py  chart/  draft.toml  requirements.txt
 
-被Draft创建的 *chart/*和*Dockerfiles*资源默认为基础的Python配置。这个*Dockerfile*文件利用了[python:onbuild image](https://hub.docker.com/_/python/)镜像，它将使用*requirements.txt*文件安装依赖，把当前目录复制到*/usr/src/app*目录中。并且要与*chart/values.yaml*文件中的值对其，这个*Dockerflie*从容器暴露了80端口。
+被Draft创建的 `chart/`和`Dockerfiles`资源默认为基础的Python配置。这个`Dockerfile`文件利用了[python:onbuild image](https://hub.docker.com/_/python/)镜像，它将使用`requirements.txt`文件安装依赖，把当前目录复制到`/usr/src/app`目录中。并且要与`chart/values.yaml`文件中的值对其，这个`Dockerflie`从容器暴露了80端口。
 
-*draft.toml* 文件包含与应用相关的基本配置，它的命名空间将会按此应用类似的名字部署。以及是否在本地文件更改时是自动部署应用程序。
+`draft.toml` 文件包含与应用相关的基本配置，它的命名空间将会按此应用类似的名字部署。以及是否在本地文件更改时是自动部署应用程序。
 
 	$ cat draft.toml
 	[environments]
@@ -43,13 +43,13 @@ Draft也为云的“内部循环”提供开发经验。当然，与今天所有
 
 现在我们将准备好的 `app.py` 部署到Kubernetes集群。
 Draft通过一个 `draft up` 命令来处理这些任务：
-- 从 *draft.toml* 读取配置
-- 将 *chart/* 目录和应用程序目录压缩成两个单独的压缩包
-- 将压缩包上传到*draftd* ，即服务器端组件
-- 然后 *draftd* 将构建docker镜像并将这个镜像推送到注册表
-- *draftd* 引用刚刚构建的Docker注册表镜像指导helm安装Helm图表
+- 从 `draft.toml` 读取配置
+- 将 `chart/` 目录和应用程序目录压缩成两个单独的压缩包
+- 将压缩包上传到`draftd` ，即服务器端组件
+- 然后 `draftd` 将构建docker镜像并将这个镜像推送到注册表
+- `draftd` 引用刚刚构建的Docker注册表镜像指导helm安装Helm图表
 
-将 *watch* 选项设置为 *true*，我们可以让这个应用运行在后台以便我们在后面做出改变...
+将 `watch` 选项设置为 `true`，我们可以让这个应用运行在后台以便我们在后面做出改变...
 
 	$ draft up
 	--> Building Dockerfile
